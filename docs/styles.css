@@ -438,3 +438,9 @@ main::after{right:var(--rail-x)}
   .step-tap .demo-card,.demo-card-close{opacity:1}
   .ripple{display:none}
 }
+
+/* Native phrase selection, including touch selection handles. */
+#reader-text .word,#reader-title .word{display:inline;-webkit-user-select:text;user-select:text;-webkit-touch-callout:default}
+.translation[data-selection]{width:min(360px,calc(100vw - 20px));max-height:min(380px,calc(100dvh - 24px));overflow:auto;overflow-wrap:anywhere;overscroll-behavior:contain}
+.translation[data-selection] #translation-value{font-size:17px;line-height:1.5}
+.translation[data-selection] #translation-word{white-space:normal;line-height:1.5}
