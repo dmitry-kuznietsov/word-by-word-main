@@ -690,7 +690,6 @@ main::after{right:var(--rail-x)}
   line-height:1.1;
 }
 #reader #reader-text{
-  max-width:74ch;
   margin-inline:auto;
 }
 #reader #reader-text p{
