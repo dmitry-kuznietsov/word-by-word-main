@@ -568,30 +568,3 @@ document.addEventListener("pointerdown",event=>{if(event.target instanceof Eleme
 for(const name of ["pointerup","pointercancel"])document.addEventListener(name,()=>{wbwDragging=false;wbwScheduleSelection()});
 document.addEventListener("selectionchange",wbwScheduleSelection);
 document.addEventListener("keydown",event=>{if(event.key==="Escape")closeCard()});
-
-/* Reader font-size controls */
-(function initReaderFontControls(){
-  const reader=document.getElementById("reader-text");
-  const decrease=document.getElementById("reader-font-decrease");
-  const increase=document.getElementById("reader-font-increase");
-  const output=document.getElementById("reader-font-size");
-  if(!reader||!decrease||!increase||!output)return;
-  const MIN=14,MAX=30,STEP=2;
-  let size=18;
-  try{const saved=localStorage.getItem("wbw-reader-font-size");if(saved!==null&&Number.isFinite(Number(saved)))size=Math.max(MIN,Math.min(MAX,Number(saved)))}catch(_){}
-  function applySize(){
-    reader.querySelectorAll("p").forEach(p=>p.style.setProperty("font-size",size+"px","important"));
-    output.textContent=size+" px";
-    decrease.disabled=size<=MIN;
-    increase.disabled=size>=MAX;
-  }
-  function change(next){
-    size=Math.max(MIN,Math.min(MAX,next));
-    applySize();
-    try{localStorage.setItem("wbw-reader-font-size",String(size))}catch(_){}
-  }
-  decrease.addEventListener("click",()=>change(size-STEP));
-  increase.addEventListener("click",()=>change(size+STEP));
-  new MutationObserver(applySize).observe(reader,{childList:true});
-  applySize();
-})();
