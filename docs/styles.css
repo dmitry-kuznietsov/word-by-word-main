@@ -291,7 +291,7 @@ main::after{right:var(--rail-x)}
 .story{padding:clamp(28px,4vw,52px) clamp(22px,5vw,68px) clamp(32px,4.5vw,60px)}
 .chapter{display:block;color:var(--muted);font:400 14px/1.2 var(--font-display)}
 #reader-title{margin:.4em 0 .6em;font:500 clamp(30px,3.7vw,48px)/1.12 var(--font-display);letter-spacing:-.032em;text-wrap:balance}
-#reader-text p{max-width:62ch;margin:0 0 1.15em;font:400 clamp(18.5px,1.4vw,21px)/1.8 var(--font-read);font-optical-sizing:auto;text-wrap:pretty}
+#reader-text p{max-width:62ch;margin:0 0 0.5rem;font:400 clamp(18.5px,1.4vw,18px)/1.8 var(--font-read);font-optical-sizing:auto;text-wrap:pretty}
 #reader-text p:last-child{margin-bottom:0}
 .reader-foot{display:grid;grid-template-columns:44px minmax(0,1fr) 44px;align-items:center;gap:12px;padding:14px clamp(18px,3vw,36px);border-top:1px solid var(--line)}
 .reader-foot-copy{grid-column:2;display:flex;flex-wrap:wrap;justify-content:center;gap:6px 14px;color:var(--muted);font:400 14.5px/1.4 var(--font-display);text-align:center}
