@@ -196,5 +196,33 @@
   <script src="icons.js"></script>
   <script src="app.js"></script>
   <script src="fx.js"></script>
+  <script>
+    (function(){
+      const MIN=14,MAX=30,STEP=2;
+      const reader=document.getElementById("reader-text");
+      const output=document.getElementById("reader-font-size");
+      if(!reader||!output)return;
+      let size=18;
+      try{const saved=Number(localStorage.getItem("wbw-reader-font-size"));if(Number.isFinite(saved)&&saved>=MIN&&saved<=MAX)size=saved}catch(e){}
+      function apply(){
+        reader.style.setProperty("--reader-font-size",size+"px");
+        output.textContent=size+" px";
+        const down=document.getElementById("reader-font-decrease");
+        const up=document.getElementById("reader-font-increase");
+        if(down)down.disabled=size<=MIN;
+        if(up)up.disabled=size>=MAX;
+      }
+      document.addEventListener("click",function(event){
+        const target=event.target;
+        const button=target instanceof Element?target.closest("#reader-font-decrease,#reader-font-increase"):null;
+        if(!button)return;
+        event.preventDefault();
+        size=Math.max(MIN,Math.min(MAX,size+(button.id==="reader-font-increase"?STEP:-STEP)));
+        apply();
+        try{localStorage.setItem("wbw-reader-font-size",String(size))}catch(e){}
+      });
+      apply();
+    })();
+  </script>
 </body>
 </html>
