@@ -543,8 +543,13 @@ async function wbwFetchPhrase(text){
     for(const chunk of wbwTranslationChunks(text)){
       const url=new URL("https://api.mymemory.translated.net/get");url.searchParams.set("q",chunk);url.searchParams.set("langpair","en|uk");
       const response=await fetch(url,{signal:AbortSignal.timeout(12000)}),data=await response.json();
-      if(!response.ok||data.responseStatus!==200||!data.responseData?.translatedText)throw Error("translation");
-      const decoded=document.createElement("textarea");decoded.innerHTML=data.responseData.translatedText;const translated=decoded.value.trim();if(!/[А-Яа-яІіЇїЄєҐґ]/.test(translated))throw Error("unexpected translation language");result.push(translated);
+      if(!response.ok||data.responseStatus!==200)throw Error("translation");
+      const normalize=value=>String(value||"").toLocaleLowerCase().replace(/[’‘]/g,"'").replace(/[^a-z0-9' ]/g," ").replace(/\\s+/g," ").trim();
+      const exactMatches=(data.matches||[]).filter(match=>normalize(match.segment)===normalize(chunk)&&match.translation).sort((a,b)=>Number(b.quality||b.match||0)-Number(a.quality||a.match||0));
+      const rawTranslation=exactMatches[0]?.translation||data.responseData?.translatedText;
+      const decoded=document.createElement("textarea");decoded.innerHTML=rawTranslation||"";const translated=decoded.value.trim();
+      if(!/[А-Яа-яІіЇїЄєҐґ]/.test(translated))throw Error("unexpected translation language");
+      result.push(translated);
     }
     const translation=result.join(" ");wbwPhraseCache.set(text,translation);return translation;
   })().finally(()=>wbwPhraseRequests.delete(text));
@@ -567,7 +572,7 @@ async function wbwTranslateSelection(selected){
 }
 let wbwSelectionTimer,wbwDragging=false;
 function wbwScheduleSelection(){clearTimeout(wbwSelectionTimer);if(wbwDragging)return;wbwSelectionTimer=setTimeout(()=>{const selected=wbwReadSelection();if(selected)void wbwTranslateSelection(selected);else wbwLastSelection=""},250)}
-document.addEventListener("pointerdown",event=>{if(event.target instanceof Element&&event.target.closest("#reader-text,#reader-title")){wbwDragging=true;wbwLastSelection="";clearTimeout(wbwSelectionTimer)}});
+document.addEventListener("pointerdown",event=>{if(event.target instanceof Element&&event.target.closest("#reader-text,#reader-title")){wbwDragging=true;wbwLastSelection="";requestId++;clearTimeout(wbwSelectionTimer)}});
 for(const name of ["pointerup","pointercancel"])document.addEventListener(name,()=>{wbwDragging=false;wbwScheduleSelection()});
 document.addEventListener("selectionchange",wbwScheduleSelection);
 document.addEventListener("keydown",event=>{if(event.key==="Escape")closeCard()});
