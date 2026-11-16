@@ -559,3 +559,190 @@ main::after{right:var(--rail-x)}
   transform:translate(-50%,-50%) rotate(-45deg);
 }
 
+
+
+/* =========================================================
+   UX refresh — reader workspace (stage 1)
+   Keeps the existing markup and reading/translation logic.
+   ========================================================= */
+#reader.sheet{
+  padding-top:clamp(52px,6vw,88px);
+  padding-bottom:clamp(64px,7vw,104px);
+}
+#reader .reader-layout{
+  gap:clamp(22px,3vw,34px);
+}
+#reader .reader-copy{
+  display:grid;
+  grid-template-columns:minmax(220px,.85fr) minmax(0,1.5fr);
+  align-items:center;
+  column-gap:clamp(24px,4vw,56px);
+  row-gap:14px;
+  padding:clamp(22px,3vw,34px);
+  border:1px solid var(--line-2);
+  border-radius:22px;
+  background:linear-gradient(115deg,var(--accent-tint),#fff 72%);
+}
+#reader .reader-copy .section-title{
+  grid-column:1;
+  align-self:end;
+  margin:0;
+  font-size:clamp(27px,3vw,38px);
+  line-height:1.08;
+}
+#reader .reader-copy>p:not(.notice){
+  grid-column:2;
+  align-self:end;
+  max-width:58ch;
+  margin:0;
+  font-size:clamp(15.5px,1.1vw,17px);
+  line-height:1.6;
+}
+#reader .gestures{
+  grid-column:1/-1;
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin:4px 0 0;
+  padding:14px 0 0;
+  border-top:1px solid var(--line-2);
+}
+#reader .gestures div{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  padding:7px 11px;
+  border:1px solid var(--line-2);
+  border-radius:12px;
+  background:rgba(255,255,255,.78);
+}
+#reader .gestures dt{
+  padding:0;
+  border:0;
+  background:transparent;
+  color:var(--accent-deep);
+  font-size:13px;
+  font-weight:600;
+}
+#reader .gestures dd{
+  font-size:13px;
+  line-height:1.35;
+}
+#reader .notice{
+  grid-column:1/-1;
+  margin:0;
+  padding:0 0 0 12px;
+  border-left-width:2px;
+  font-size:14px;
+}
+#reader .notice strong{
+  display:inline;
+  margin-right:5px;
+}
+#reader .reader-card{
+  border:1px solid var(--line-2);
+  border-radius:24px;
+  background:#fff;
+  box-shadow:0 18px 55px -42px rgba(11,16,32,.38),0 3px 12px -8px rgba(11,16,32,.12);
+}
+#reader .reader-bar{height:3px}
+#reader .reader-head{
+  min-height:66px;
+  padding:14px clamp(20px,3.4vw,44px);
+  background:linear-gradient(180deg,#fff,var(--accent-tint));
+}
+#reader .reader-meta{gap:10px}
+#reader .reader-meta b{
+  min-width:44px;
+  padding:6px 12px;
+  text-align:center;
+}
+#reader .reader-time{
+  padding:7px 11px;
+  border:1px solid var(--line-2);
+  border-radius:999px;
+  background:#fff;
+  font-size:13px;
+}
+#reader .reader-font-controls{
+  gap:5px;
+  padding:4px;
+  border-color:var(--line-2);
+  box-shadow:0 1px 2px rgba(11,16,32,.04);
+}
+#reader .reader-font-controls button{
+  min-width:40px;
+  min-height:40px;
+}
+#reader .story{
+  padding:clamp(32px,5vw,62px) clamp(22px,6vw,76px) clamp(36px,5vw,64px);
+}
+#reader .chapter{
+  color:var(--accent-deep);
+  font-size:12px;
+  font-weight:600;
+  letter-spacing:.075em;
+  text-transform:uppercase;
+}
+#reader #reader-title{
+  margin:.5em 0 .8em;
+  font-size:clamp(32px,4vw,50px);
+  line-height:1.1;
+}
+#reader #reader-text{
+  max-width:74ch;
+  margin-inline:auto;
+}
+#reader #reader-text p{
+  max-width:none;
+  margin-bottom:.8em;
+  font-size:var(--reader-font-size,18px)!important;
+  line-height:1.9;
+  letter-spacing:.002em;
+}
+#reader .reader-foot{
+  min-height:72px;
+  padding:12px clamp(16px,3vw,32px);
+  background:#fcfdff;
+}
+#reader .reader-foot-copy{
+  font-size:13px;
+}
+#reader .reader-nav{
+  width:46px;
+  height:46px;
+  border-color:var(--line-2);
+  background:#fff;
+}
+#reader .reader-nav:focus-visible,
+#reader .reader-font-controls button:focus-visible{
+  outline:3px solid var(--accent);
+  outline-offset:3px;
+}
+@media (max-width:900px){
+  #reader .reader-copy{
+    grid-template-columns:1fr;
+    gap:12px;
+  }
+  #reader .reader-copy .section-title,
+  #reader .reader-copy>p:not(.notice),
+  #reader .gestures,
+  #reader .notice{grid-column:1}
+  #reader .reader-copy .section-title{font-size:clamp(27px,5vw,36px)}
+  #reader .reader-copy>p:not(.notice){max-width:68ch}
+}
+@media (max-width:560px){
+  #reader.sheet{padding-top:44px;padding-bottom:56px}
+  #reader .reader-copy{padding:19px 17px;border-radius:18px}
+  #reader .gestures{gap:7px;padding-top:12px}
+  #reader .gestures div{padding:7px 9px}
+  #reader .gestures dd{font-size:12px}
+  #reader .reader-head{gap:10px;padding:12px 16px}
+  #reader .reader-tools{gap:10px}
+  #reader .reader-time{margin-left:auto}
+  #reader .story{padding:28px 20px 34px}
+  #reader #reader-title{font-size:clamp(29px,8vw,38px)}
+  #reader #reader-text p{line-height:1.82}
+  #reader .reader-foot{grid-template-columns:40px minmax(0,1fr) 40px;gap:6px;padding:10px 12px}
+  #reader .reader-nav{width:40px;height:40px}
+}
