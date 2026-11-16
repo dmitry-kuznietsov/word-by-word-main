@@ -195,38 +195,6 @@
 
   <script src="icons.js"></script>
   <script src="app.js"></script>
-  <script>
-    (() => {
-      const text = document.getElementById("reader-text");
-      const decrease = document.getElementById("reader-font-decrease");
-      const increase = document.getElementById("reader-font-increase");
-      const output = document.getElementById("reader-font-size");
-      if (!text || !decrease || !increase || !output) return;
-      const min = 14, max = 30, step = 2;
-      let size = 18;
-      try {
-        const saved = Number(localStorage.getItem("wbw-reader-font-size"));
-        if (Number.isFinite(saved) && saved >= min && saved <= max) size = saved;
-      } catch (e) {}
-      const render = () => {
-        text.style.setProperty("--reader-font-size", size + "px");
-        output.textContent = size + " px";
-        decrease.disabled = size <= min;
-        increase.disabled = size >= max;
-      };
-      decrease.addEventListener("click", () => {
-        size = Math.max(min, size - step);
-        render();
-        try { localStorage.setItem("wbw-reader-font-size", String(size)); } catch (e) {}
-      });
-      increase.addEventListener("click", () => {
-        size = Math.min(max, size + step);
-        render();
-        try { localStorage.setItem("wbw-reader-font-size", String(size)); } catch (e) {}
-      });
-      render();
-    })();
-  </script>
   <script src="fx.js"></script>
 </body>
 </html>
