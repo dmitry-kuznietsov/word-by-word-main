@@ -533,3 +533,29 @@ main::after{right:var(--rail-x)}
 .reader-font-controls button:disabled{opacity:.35;cursor:default}
 .reader-font-controls output{min-width:46px;color:var(--muted);font:500 12px/1 var(--font-display);text-align:center;font-variant-numeric:tabular-nums}
 @media (max-width:560px){.reader-tools{width:100%;justify-content:space-between}.reader-head{align-items:center}}
+
+/* Center the close cross optically and geometrically inside its circle. */
+.translation .close{
+  display:grid;
+  place-items:center;
+  padding:0;
+  font-size:0;
+  line-height:0;
+}
+.translation .close::before,
+.translation .close::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:12px;
+  height:1.5px;
+  border-radius:2px;
+  background:currentColor;
+  transform:translate(-50%,-50%) rotate(45deg);
+  transition:background-color .2s;
+}
+.translation .close::after{
+  transform:translate(-50%,-50%) rotate(-45deg);
+}
+
