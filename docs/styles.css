@@ -444,3 +444,29 @@ main::after{right:var(--rail-x)}
 .translation[data-selection]{width:min(360px,calc(100vw - 20px));max-height:min(380px,calc(100dvh - 24px));overflow:auto;overflow-wrap:anywhere;overscroll-behavior:contain}
 .translation[data-selection] #translation-value{font-size:17px;line-height:1.5}
 .translation[data-selection] #translation-word{white-space:normal;line-height:1.5}
+
+
+/* ---------- Рідер: інструкція зверху, текст на всю ширину ---------- */
+#reader .reader-layout{
+  display:flex;
+  flex-direction:column;
+  align-items:stretch;
+  gap:clamp(24px,3vw,40px);
+}
+#reader .reader-copy{
+  position:static;
+  width:100%;
+  max-width:none;
+}
+#reader .reader-copy>p:not(.notice){
+  max-width:none;
+}
+#reader .reader-card{
+  display:block;
+  width:100%;
+  min-width:0;
+  max-width:none;
+}
+#reader #reader-text p{
+  max-width:none;
+}
