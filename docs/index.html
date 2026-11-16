@@ -111,7 +111,14 @@
         </div>
         <article class="reader-card" aria-label="Текст для читання">
           <div class="reader-bar" aria-hidden="true"><i></i></div>
-          <div class="reader-head"><span class="reader-meta"><b id="reader-level">A1</b><span id="reader-genre">Повсякденність</span></span><span class="reader-time" id="reader-time">4 хв</span></div>
+          <div class="reader-head"><span class="reader-meta"><b id="reader-level">A1</b><span id="reader-genre">Повсякденність</span></span><div class="reader-tools">
+            <div class="reader-font-controls" role="group" aria-label="Розмір шрифту">
+              <button type="button" id="reader-font-decrease" aria-label="Зменшити шрифт" title="Зменшити шрифт">A−</button>
+              <output id="reader-font-size" aria-live="polite">18 px</output>
+              <button type="button" id="reader-font-increase" aria-label="Збільшити шрифт" title="Збільшити шрифт">A+</button>
+            </div>
+            <span class="reader-time" id="reader-time">4 хв</span>
+          </div></div>
           <div class="story">
             <span class="chapter" id="reader-chapter">Рівень A1</span>
             <h3 id="reader-title">A Morning Walk</h3>
@@ -188,6 +195,38 @@
 
   <script src="icons.js"></script>
   <script src="app.js"></script>
+  <script>
+    (() => {
+      const text = document.getElementById("reader-text");
+      const decrease = document.getElementById("reader-font-decrease");
+      const increase = document.getElementById("reader-font-increase");
+      const output = document.getElementById("reader-font-size");
+      if (!text || !decrease || !increase || !output) return;
+      const min = 14, max = 30, step = 2;
+      let size = 18;
+      try {
+        const saved = Number(localStorage.getItem("wbw-reader-font-size"));
+        if (Number.isFinite(saved) && saved >= min && saved <= max) size = saved;
+      } catch (e) {}
+      const render = () => {
+        text.style.setProperty("--reader-font-size", size + "px");
+        output.textContent = size + " px";
+        decrease.disabled = size <= min;
+        increase.disabled = size >= max;
+      };
+      decrease.addEventListener("click", () => {
+        size = Math.max(min, size - step);
+        render();
+        try { localStorage.setItem("wbw-reader-font-size", String(size)); } catch (e) {}
+      });
+      increase.addEventListener("click", () => {
+        size = Math.min(max, size + step);
+        render();
+        try { localStorage.setItem("wbw-reader-font-size", String(size)); } catch (e) {}
+      });
+      render();
+    })();
+  </script>
   <script src="fx.js"></script>
 </body>
 </html>
