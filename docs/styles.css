@@ -471,38 +471,33 @@ main::after{right:var(--rail-x)}
   max-width:none;
 }
 
-/* ---------- Власні книжки: стабільна анімація наведення ---------- */
+/* ---------- Власні книжки: спокійний hover без стрибків ---------- */
 #books .my-book{
-  transform:translateY(0);
-  transform-origin:center;
-  transition:transform .28s cubic-bezier(.2,.7,.25,1),
-             border-color .28s ease,
-             box-shadow .28s ease,
-             background-color .28s ease;
+  transform:none;
+  transition:border-color .2s ease,box-shadow .2s ease;
 }
-#books .my-book .book-icon{
-  transform:translateY(0) rotate(0) scale(1);
-  transition:transform .36s cubic-bezier(.2,.7,.25,1);
-}
+#books .my-book .book-icon,
 #books .my-book .open svg{
-  transition:transform .28s ease;
+  transform:none;
+  transition:none;
+}
+/* Глобальна анімація .book відкриває опис при hover — тут опис завжди видимий. */
+#books .my-book:hover .book-note,
+#books .my-book .my-book-open:focus-visible .book-note{
+  max-height:none;
+  margin-top:8px;
+  opacity:1;
+  transition:none;
 }
 @media (hover:hover) and (prefers-reduced-motion:no-preference){
   #books .my-book:hover{
-    transform:translateY(-5px);
     border-color:var(--accent);
-    box-shadow:0 18px 38px -24px rgba(11,16,32,.38);
-  }
-  #books .my-book:hover .book-icon{
-    transform:translateY(-3px) rotate(-4deg) scale(1.07);
-  }
-  #books .my-book:hover .open svg{
-    transform:translateX(4px);
+    box-shadow:0 8px 22px -18px rgba(11,16,32,.28);
   }
 }
 #books .my-book:focus-within{
   border-color:var(--accent);
-  box-shadow:0 0 0 3px var(--accent-tint),0 12px 28px -22px rgba(11,16,32,.3);
+  box-shadow:0 0 0 2px var(--accent-tint);
 }
 #books .my-book .my-book-open:focus-visible{
   outline:2px solid var(--accent);
@@ -515,4 +510,3 @@ main::after{right:var(--rail-x)}
     transition:none;
   }
 }
-
